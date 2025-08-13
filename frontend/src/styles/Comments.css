@@ -1,0 +1,17 @@
+
+	.comments-container {
+		margin-top: 12px;
+	}
+
+	.comment {
+		border-bottom: 1px solid #eee;
+		padding: 8px 0;
+	}
+
+	.comment-author {
+		font-weight: bold;
+	}
+
+	.comment-content {
+		margin: 4px 0 0;
+	}
