@@ -69,7 +69,11 @@ function Header({ onNoteCreated }) {
 
 	return (
 		<div className="notes-header">
-			<h2>Notes {user && `- Welcome, ${user.username}!`}</h2>
+			<div className="logo">
+			<h2>Notes </h2>
+			</div>
+			<div className="header-views">
+
 			<button className="create-button" onClick={openCreateModal}>Create Note</button>
 			<button className="logout-button" onClick={logout}>Logout</button>
 			<div className="user-profile">
@@ -78,15 +82,20 @@ function Header({ onNoteCreated }) {
 				)}
 				{user && (
 					<div className="email">
-						{user.email || user.userprofile?.email || "No email provided"}
+						{user.email || user.userprofile?.email || ""}
 					</div>
+				)}
+				{user && (
+					<button className="profile-button" onClick={getUserProfile}>
+						View Profile
+					</button>
 				)}
 
 				<img 
 					src={
 						user?.userprofile?.profile_picture 
-							? user.userprofile.profile_picture
-							: 'http://localhost:8000/static/images/default-profile.svg'
+						? user.userprofile.profile_picture
+						: 'http://localhost:8000/static/images/default-profile.svg'
 					} 
 					alt="Profile" 
 					className="profile-picture"
@@ -95,12 +104,8 @@ function Header({ onNoteCreated }) {
 						// Fallback to a reliable placeholder service
 						e.target.src = 'https://placehold.co/40x40/e5e7eb/9ca3af?text=👤';
 					}}
-				/>
-				{user && (
-					<button className="profile-button" onClick={getUserProfile}>
-						View Profile
-					</button>
-				)}
+					/>
+				</div>
 			</div>
 			
 			{/* Create Note Modal */}

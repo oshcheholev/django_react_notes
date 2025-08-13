@@ -3,8 +3,7 @@ import Comment from './Comment';
 import api from '../api';
 import '../styles/Comment.css';
 
-const CommentsSection = ({ noteId, comments, onCommentsUpdate }) => {
-  const [showComments, setShowComments] = useState(false);
+const CommentsSection = ({ noteId, comments, showComments, onCommentsUpdate }) => {
   const [showAddForm, setShowAddForm] = useState(false);
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,14 +31,8 @@ const CommentsSection = ({ noteId, comments, onCommentsUpdate }) => {
     }
   };
 
-  const toggleComments = () => {
-    setShowComments(!showComments);
-    if (showAddForm) setShowAddForm(false);
-  };
-
   const toggleAddForm = () => {
     setShowAddForm(!showAddForm);
-    if (!showComments) setShowComments(true);
   };
 
   const cancelAdd = () => {
@@ -49,18 +42,6 @@ const CommentsSection = ({ noteId, comments, onCommentsUpdate }) => {
 
   return (
     <div className="comments-section">
-      <div className="comments-header">
-        <h4 className="comments-title">
-          Comments ({comments.length})
-        </h4>
-        <button 
-          className="comments-toggle" 
-          onClick={toggleComments}
-        >
-          {showComments ? 'Hide Comments' : 'Show Comments'}
-        </button>
-      </div>
-
       {showComments && (
         <>
           <div className="comments-list">

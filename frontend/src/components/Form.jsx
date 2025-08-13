@@ -35,13 +35,13 @@ function Form({ route, method }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="form-container"><div className='bold-line'></div>
-			<div className='container'>
+		<div className='form-container'>
+	        <form onSubmit={handleSubmit} >
 			<div className='window'>
 				<div className='overlay'></div>
 				<div className='content'>
 				<div className='welcome'>{name}</div>
-				<div className='subtitle'>We're almost done. Before using our services you need to create an account.</div>
+				<div className='subtitle'>Please Login or Register</div>
 				<div className='input-fields'>
 					<input
 							className="input-line full-width"
@@ -69,13 +69,13 @@ function Form({ route, method }) {
 
 				</div>
 				<div><button type='submit' className='ghost-round full-width'>{name}</button></div>
-				{method === "login" && (<div className='spacing'>or <a href='/register'>create an account</a></div>)}
-				{method === "register" && (<div className='spacing'>or <a href='/login'>login</a></div>)}
+				{method === "login" && (<div className='spacing'>or <a href='/register'>Create an account</a></div>)}
+				{method === "register" && (<div className='spacing'>or <a href='/login'>Login</a></div>)}
 				</div>
 			</div>
-			</div>
-            {/* <h1>{name}</h1>
-            
+	        </form>
+			{/* <h1>{name}</h1>
+
 			{method === "register" && (
 
 			<input
@@ -96,7 +96,8 @@ function Form({ route, method }) {
             <button className="form-button" type="submit">
                 {name}
             </button> */}
-        </form>
+			</div>
+//   </form>
     );
 }
 export default Form;

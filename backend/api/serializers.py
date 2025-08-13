@@ -51,11 +51,22 @@ class NoteSerializer(serializers.ModelSerializer):
     author_username = serializers.CharField(source='author.username', read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
     comments_count = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
+    is_liked_by_user = serializers.SerializerMethodField()
     
     class Meta:
         model = Note
-        fields = ['id', 'title', 'content', 'created_at', 'author', 'author_username', 'comments', 'comments_count']
+        fields = ['id', 'title', 'content', 'created_at', 'author', 'author_username', 'comments', 'comments_count', 'likes_count', 'is_liked_by_user']
         extra_kwargs = {'author': {'read_only': True}}
     
     def get_comments_count(self, obj):
         return obj.comments.count()
+    
+    def get_likes_count(self, obj):
+        return obj.get_likes_count()
+    
+    def get_is_liked_by_user(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.is_liked_by_user(request.user)
+        return False

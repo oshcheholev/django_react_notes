@@ -22,6 +22,13 @@ class NoteListCreate(generics.ListCreateAPIView):
 		# Return notes authored by the authenticated user
 		user = self.request.user
 		return Note.objects.all()  #.filter(author=user)
+	
+	def get_serializer_context(self):
+		# Pass request context to serializer
+		context = super().get_serializer_context()
+		context['request'] = self.request
+		return context
+		
 	def perform_create(self, serializer):
 		if serializer.is_valid():
 			serializer.save(author=self.request.user)
@@ -104,6 +111,35 @@ class CommentListCreate(generics.ListCreateAPIView):
 		note_id = self.kwargs.get('note_id')
 		note = Note.objects.get(id=note_id)
 		serializer.save(author=self.request.user, note=note)
+
+class ToggleLikeNote(generics.GenericAPIView):
+	permission_classes = [IsAuthenticated]
+
+	def post(self, request, note_id):
+		try:
+			note = Note.objects.get(id=note_id)
+			user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+			
+			# Check current like status
+			is_currently_liked = note.is_liked_by_user(request.user)
+			print(f"User: {request.user.username}, Note: {note_id}, Currently liked: {is_currently_liked}")
+			
+			# Toggle the like
+			toggled = note.toggle_like(request.user)
+			
+			# Get updated counts
+			likes_count = note.get_likes_count()
+			print(f"After toggle - Liked: {toggled}, Likes count: {likes_count}")
+			
+			if toggled is None:
+				return Response({'error': 'User not authenticated'}, status=403)
+			return Response({
+				'liked': toggled, 
+				'likes_count': likes_count,
+				'is_liked_by_user': note.is_liked_by_user(request.user)
+			})
+		except Note.DoesNotExist:
+			return Response({'error': 'Note not found'}, status=404)
 
 
 
