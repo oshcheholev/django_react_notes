@@ -1,3 +1,45 @@
-/node_modules
-/build
+# Frontend dependencies and build
+/frontend/node_modules
+/frontend/build
+/frontend/dist
+
+# Python virtual environment
 /env
+/venv
+*.env
+
+# Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+db.sqlite3
+db.sqlite3-journal
+
+# Media files (user uploads)
+/backend/media/
+
+# Static files (generated)
+/backend/staticfiles/
+/backend/static/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Secret keys and sensitive data
+*.key
+*.pem
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
